@@ -1,7 +1,7 @@
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
+import javafx.scene.Parent;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -13,15 +13,16 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        window = primaryStage;
-        window.setTitle("My First JavaFX Project");
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            Scene scene = new Scene(root, 800, 800);
 
-        Button button = new Button("Button");
+            primaryStage.setTitle("Clueless");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        VBox layout = new VBox();
-        layout.getChildren().addAll(button);
-        Scene scene = new Scene(layout, 600, 600);
-        window.setScene(scene);
-        window.show();
     }
 }
