@@ -1,0 +1,44 @@
+.study {
+  -fx-background-image: url("../assets/study");
+  -fx-background-size: cover;
+}
+
+.hall {
+  -fx-background-image: url("../assets/hall");
+  -fx-background-size: cover;
+}
+
+.lounge {
+  -fx-background-image: url("../assets/lounge");
+  -fx-background-size: cover;
+}
+
+.library {
+  -fx-background-image: url("../assets/library");
+  -fx-background-size: cover;
+}
+
+.billiardroom {
+  -fx-background-image: url("../assets/billiardroom");
+  -fx-background-size: cover;
+}
+
+.diningroom {
+  -fx-background-image: url("../assets/diningroom");
+  -fx-background-size: cover;
+}
+
+.conservatory {
+  -fx-background-image: url("../assets/conservatory");
+  -fx-background-size: cover;
+}
+
+.ballroom {
+  -fx-background-image: url("../assets/ballroom");
+  -fx-background-size: cover;
+}
+
+.kitchen {
+  -fx-background-image: url("../assets/kitchen");
+  -fx-background-size: cover;
+}

@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,8 +16,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-            Scene scene = new Scene(root, 800, 800);
+            Parent root = FXMLLoader.load(getClass().getResource("Gameboard.fxml"));
+            Scene scene = new Scene(root, 1000, 1000);
 
             primaryStage.setTitle("Clueless");
             primaryStage.setScene(scene);
