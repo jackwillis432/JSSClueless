@@ -1,13 +1,17 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+    private ArrayList<String> characters = new ArrayList<>(Arrays.asList("Miss Scarlet", "Colonel Mustard",
+            "Mrs. White", "Mr. Green", "Mrs. Peacock", "Professor Plum"));
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUsername;
+    private String character;
 
     public ClientHandler(Socket socket) {
         try {
@@ -19,8 +23,9 @@ public class ClientHandler implements Runnable {
                 // this is what the client is sending (server is reading)
                 this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 this.clientUsername = bufferedReader.readLine();
+                this.character = characters.get(clientHandlers.size());
                 clientHandlers.add(this);
-                broadcastMessage("Server: " + clientUsername + " has entered the chat!");
+                broadcastMessage("Server: " + clientUsername + " (" + character + ") is here!");
             }
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);

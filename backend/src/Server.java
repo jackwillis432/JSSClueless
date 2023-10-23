@@ -20,7 +20,7 @@ public class Server {
             while (!serverSocket.isClosed()) {
                 // blocking method, server halted until someone connects
                 Socket socket = serverSocket.accept();
-                System.out.println("A new client has connected");
+                System.out.println("A new player has connected");
                 ClientHandler clientHandler = new ClientHandler(socket);
 
                 Thread thread = new Thread(clientHandler);

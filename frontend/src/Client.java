@@ -1,28 +1,25 @@
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
 
-public class Client extends Application {
+public class Client {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String username;
 
-    public static void main(String args[]) throws IOException {
-        Socket socket = new Socket("localhost", 1234);
-        Client client = new Client(socket, args[0]);
-        // blocking method on its own thread
-        client.listenForMessage();
-        // blocking method on its own thread
-        client.sendMsg();
+    // public static void main(String args[]) throws IOException {
+    // Socket socket = new Socket("localhost", 1234);
+    // Scanner scanner = new Scanner(System.in);
+    // System.out.print("Enter your username: ");
+    // String username = scanner.nextLine();
+    // Client client = new Client(socket, username);
 
-        launch(args);
-    }
+    // // blocking method on its own thread
+    // client.listenForMessage();
+    // // blocking method on its own thread
+    // client.sendMsg();
+    // }
 
     public Client(Socket socket, String username) {
         try {
@@ -35,21 +32,6 @@ public class Client extends Application {
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("Gameboard.fxml"));
-            Scene scene = new Scene(root, 1000, 1000);
-
-            primaryStage.setTitle("Clueless");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     public void sendMsg() {
