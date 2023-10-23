@@ -3,7 +3,6 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
-
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private Socket socket;
     private BufferedReader bufferedReader;
@@ -12,14 +11,17 @@ public class ClientHandler implements Runnable {
 
     public ClientHandler(Socket socket) {
         try {
-            this.socket = socket;
-            // this is what the server is sending (server is writing)
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            // this is what the client is sending (server is reading)
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.clientUsername = bufferedReader.readLine();
-            clientHandlers.add(this);
-            broadcastMessage("Server: " + clientUsername + " has entered the chat!");
+            // Only allow up to six players to connect
+            if (clientHandlers.size() < 6) {
+                this.socket = socket;
+                // this is what the server is sending (server is writing)
+                this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                // this is what the client is sending (server is reading)
+                this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                this.clientUsername = bufferedReader.readLine();
+                clientHandlers.add(this);
+                broadcastMessage("Server: " + clientUsername + " has entered the chat!");
+            }
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }

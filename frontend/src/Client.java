@@ -1,24 +1,27 @@
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
 
-public class Client {
-
+public class Client extends Application {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String username;
 
     public static void main(String args[]) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your username for the group chat: ");
-        String username = scanner.nextLine();
         Socket socket = new Socket("localhost", 1234);
-        Client client = new Client(socket, username);
+        Client client = new Client(socket, args[0]);
         // blocking method on its own thread
         client.listenForMessage();
         // blocking method on its own thread
         client.sendMsg();
+
+        launch(args);
     }
 
     public Client(Socket socket, String username) {
@@ -32,6 +35,21 @@ public class Client {
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("Gameboard.fxml"));
+            Scene scene = new Scene(root, 1000, 1000);
+
+            primaryStage.setTitle("Clueless");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void sendMsg() {
@@ -77,18 +95,18 @@ public class Client {
         }).start();
     }
 
-    public void closeEverything(Socket s, BufferedReader br, BufferedWriter bw) {
+    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         try {
-            if (br != null) {
+            if (bufferedReader != null) {
                 // closes everything in the wrapper -> outputstreamwrite -> getoutputstream
-                br.close();
+                bufferedReader.close();
             }
-            if (bw != null) {
+            if (bufferedWriter != null) {
                 // closes everything in the wrapper -> inputstreamread -> getinputstream
-                bw.close();
+                bufferedWriter.close();
             }
-            if (s != null) {
-                s.close();
+            if (socket != null) {
+                socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
