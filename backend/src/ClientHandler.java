@@ -40,6 +40,7 @@ public class ClientHandler implements Runnable {
             try {
                 // blocking operation
                 msg = bufferedReader.readLine();
+                // just for testing we don't need to send messages back on initial connect
                 broadcastMessage(msg);
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
