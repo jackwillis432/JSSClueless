@@ -20,7 +20,7 @@ public class App extends Application {
     @FXML
     private Rectangle profplum;
     @FXML
-    private Rectangle mrspeakcock;
+    private Rectangle mrspeacock;
     @FXML
     private Rectangle mrgreen;
     @FXML
@@ -100,8 +100,8 @@ public class App extends Application {
     @FXML
     private void setMrspeacockPosition(String room, int pos) {
         int[] location = getPosition(room, pos);
-        mrspeakcock.setLayoutX(location[0]);
-        mrspeakcock.setLayoutY(location[1]);
+        mrspeacock.setLayoutX(location[0]);
+        mrspeacock.setLayoutY(location[1]);
     }
 
     @FXML

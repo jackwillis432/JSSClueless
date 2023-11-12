@@ -1,9 +1,11 @@
+import java.util.*;
+
 public class Player {
     private String playerName;
 
     private String characterName;
 
-    private String[] cards;
+    private ArrayList<String> cards;
 
     private int[] position;
 
@@ -11,7 +13,7 @@ public class Player {
 
     public ClientHandler clientHandler;
 
-    public Player(String playerName, String characterName, String[] cards, int[] startPosition,
+    public Player(String playerName, String characterName, ArrayList<String> cards, int[] startPosition,
             ClientHandler clientHandler) {
         this.playerName = playerName;
         this.characterName = characterName;
@@ -32,7 +34,7 @@ public class Player {
         return characterName;
     }
 
-    public String[] getCards() {
+    public ArrayList<String> getCards() {
         return cards;
     }
 

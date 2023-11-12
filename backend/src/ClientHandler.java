@@ -7,11 +7,15 @@ public class ClientHandler implements Runnable {
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private ArrayList<String> characters = new ArrayList<>(Arrays.asList("Miss Scarlet", "Colonel Mustard",
             "Mrs. White", "Mr. Green", "Mrs. Peacock", "Professor Plum"));
+    private ArrayList<int[]> startingPositions = new ArrayList<>(
+            Arrays.asList(new int[] { 665, 33 }, new int[] { 40, 215 }, new int[] { 890, 215 }, new int[] { 40, 515 },
+                    new int[] { 265, 690 }, new int[] { 665, 690 }));
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUsername;
     private String character;
+    private int[] startingPosition;
 
     public ClientHandler(Socket socket) {
         try {
@@ -24,6 +28,7 @@ public class ClientHandler implements Runnable {
                 this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 this.clientUsername = bufferedReader.readLine();
                 this.character = characters.get(clientHandlers.size());
+                this.startingPosition = startingPositions.get(clientHandlers.size());
                 clientHandlers.add(this);
                 broadcastMessage("Server: " + clientUsername + " (" + character + ") is here!");
             }
@@ -90,5 +95,17 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getUsername() {
+        return clientUsername;
+    }
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public int[] getStartingPosition() {
+        return startingPosition;
     }
 }
