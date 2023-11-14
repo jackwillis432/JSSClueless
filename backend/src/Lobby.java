@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Lobby {
     private Player currentPlayerTurn;
-    private ClientHandler[] clientHandlers;
+    public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private ArrayList<String> characters = new ArrayList<String>(Arrays.asList("Miss Scarlet", "Colonel Mustard",
             "Mrs. White", "Mr. Green", "Mrs. Peacock", "Professor Plum"));
     private ArrayList<String> weapons = new ArrayList<String>(
@@ -10,12 +10,14 @@ public class Lobby {
     private ArrayList<String> rooms = new ArrayList<String>(
             Arrays.asList("study", "hall", "lounge", "library", "billiardroom", "diningoom",
                     "conservatory", "ballroom", "kitchen", "hallway"));
-    public Player[] turnOrder;
-    public String[] winCondition;
+    public Player[] turnOrder = new Player[6];
+    public String[] winCondition = new String[3];
     public static HashMap<ClientHandler, Player> clientHandlersPlayerMap = new HashMap<>();
 
-    public Lobby(ClientHandler[] clientHandlers) {
-        this.clientHandlers = clientHandlers;
+    public Lobby(ArrayList<ClientHandler> ch) {
+        System.out.println(ch);
+        System.out.println("Assigning handlers...");
+        clientHandlers = ch;
         startGame();
     }
 
@@ -62,7 +64,7 @@ public class Lobby {
         // create clientHandler number of hands, this way we can dynamically adjust
         // hand size based on the number of players playing
         HashMap<Integer, ArrayList<String>> hands = new HashMap<>();
-        int numPlayers = clientHandlers.length;
+        int numPlayers = clientHandlers.size();
         for (int i = 0; i < 18; i++) {
             int handIndex = i % numPlayers;
             if (hands.containsKey(handIndex)) {
@@ -74,10 +76,11 @@ public class Lobby {
                 hands.put(handIndex, val);
             }
         }
+        System.out.println(hands);
 
         // create player classes for each clienthandler
-        for (int i = 0; i < clientHandlers.length; i++) {
-            ClientHandler currClientHandler = clientHandlers[i];
+        for (int i = 0; i < clientHandlers.size(); i++) {
+            ClientHandler currClientHandler = clientHandlers.get(i);
             Player newPlayer = new Player(
                     // playerName -> assign get username in clienthandler
                     currClientHandler.getUsername(),
@@ -101,26 +104,28 @@ public class Lobby {
         // add each player to the turn order array
     }
 
-    // private void createWeapons() {
-    // }
+    private void createWeapons() {
+    }
 
-    // private void createRoom() {
-    // }
+    private void createRoom() {
+    }
 
-    // private Boolean isValidMove() {
-    // // check that the player trying to move is the currentplayer
-    // //
-    // return true;
-    // }
+    private Boolean isValidMove() {
+        // check that the player trying to move is the currentplayer
+        //
+        return true;
+    }
 
     public void sendMessage(String message, ClientHandler[] recievers) {
         // hardcode game messages into specific message formats
         // tell specific clientHandlers to send a message to their clients
     }
 
-    // public String makeGuess(Guess guess){}
+    public void makeGuess(String guess) {
+    }
 
-    // public makeAccusation(Guess guess){}
+    public void makeAccusation(String guess) {
+    }
 
     public void makeMove(ClientHandler clientHandler) {
         // check if move is valid -> call isValidMove
@@ -138,6 +143,7 @@ public class Lobby {
         return currentPlayerTurn.getPlayerName();
     }
 
-    // public String[] getPlayerCards(Player player){
-    // return players cards
+    public ArrayList<String> getPlayerCards(Player player) {
+        return player.getCards();
+    }
 }

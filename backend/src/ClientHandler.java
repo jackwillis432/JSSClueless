@@ -13,22 +13,22 @@ public class ClientHandler implements Runnable {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    private String clientUsername;
-    private String character;
+    private String clientUsername = "defaultName";
+    private String character = "defaultCharacter";
     private int[] startingPosition;
 
     public ClientHandler(Socket socket) {
         try {
             // Only allow up to six players to connect
             if (clientHandlers.size() < 6) {
+                this.character = characters.get(clientHandlers.size());
+                this.startingPosition = startingPositions.get(clientHandlers.size());
                 this.socket = socket;
                 // this is what the server is sending (server is writing)
                 this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 // this is what the client is sending (server is reading)
                 this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 this.clientUsername = bufferedReader.readLine();
-                this.character = characters.get(clientHandlers.size());
-                this.startingPosition = startingPositions.get(clientHandlers.size());
                 clientHandlers.add(this);
                 broadcastMessage("Server: " + clientUsername + " (" + character + ") is here!");
             }
@@ -45,6 +45,7 @@ public class ClientHandler implements Runnable {
             try {
                 // blocking operation
                 msg = bufferedReader.readLine();
+
                 // just for testing we don't need to send messages back on initial connect
                 broadcastMessage(msg);
             } catch (IOException e) {

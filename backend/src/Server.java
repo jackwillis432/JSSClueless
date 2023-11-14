@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
 
 public class Server {
     public static void main(String[] args) throws IOException {
@@ -16,15 +17,28 @@ public class Server {
     }
 
     public void startServer() {
+        // ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
         try {
             while (!serverSocket.isClosed()) {
                 // blocking method, server halted until someone connects
                 Socket socket = serverSocket.accept();
                 System.out.println("A new player has connected");
                 ClientHandler clientHandler = new ClientHandler(socket);
-
                 Thread thread = new Thread(clientHandler);
                 thread.start();
+
+                if (clientHandler.clientHandlers.size() >= 3) {
+
+                    // Thread lobbyThread = new Thread(() -> {
+                    Lobby gameLobby;
+                    synchronized (clientHandler.clientHandlers) {
+                        gameLobby = new Lobby(new ArrayList<>(clientHandler.clientHandlers));
+                    }
+                    // // Perform any additional setup or logic for the game lobby
+                    // });
+                    // lobbyThread.start();
+                    // System.out.println("Started lobby");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
