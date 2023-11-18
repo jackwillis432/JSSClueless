@@ -183,5 +183,6 @@
       <TextField fx:id="positionTextinput" layoutX="744.0" layoutY="832.0" prefHeight="25.0" prefWidth="46.0" promptText="3" />
       <Label layoutX="580.0" layoutY="815.0" text="Room" />
       <Label layoutX="744.0" layoutY="815.0" text="Position" />
+      <Button layoutX="139.0" layoutY="867.0" mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>

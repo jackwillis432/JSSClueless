@@ -16,6 +16,7 @@ public class ClientHandler implements Runnable {
     private String clientUsername = "defaultName";
     private String character = "defaultCharacter";
     private int[] startingPosition;
+    private int clientHandlerPosition;
 
     public ClientHandler(Socket socket) {
         try {
@@ -30,7 +31,8 @@ public class ClientHandler implements Runnable {
                 this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 this.clientUsername = bufferedReader.readLine();
                 clientHandlers.add(this);
-                broadcastMessage("Server: " + clientUsername + " (" + character + ") is here!");
+                clientHandlerPosition = clientHandlers.size();
+                sendMsg("Server: " + clientUsername + " (" + character + ") is here!");
             }
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
@@ -46,8 +48,8 @@ public class ClientHandler implements Runnable {
                 // blocking operation
                 msg = bufferedReader.readLine();
 
-                // just for testing we don't need to send messages back on initial connect
-                broadcastMessage(msg);
+                // Just for testing we don't need to send messages back on initial connect
+                sendMsg(msg);
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
                 break;
@@ -55,7 +57,8 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public void broadcastMessage(String msgToSend) {
+    public void sendMsg(String msgToSend) {
+        // ClientHandler nextPlayer = clientHandlers.get(clientHandlerPosition + 1);
         for (ClientHandler clientHandler : clientHandlers) {
             try {
                 if (!clientHandler.clientUsername.equals(clientUsername)) {
@@ -76,7 +79,7 @@ public class ClientHandler implements Runnable {
 
     public void removeClientHandler() {
         clientHandlers.remove(this);
-        broadcastMessage("Server: " + clientUsername + " has left the chat!");
+        sendMsg("Server: " + clientUsername + " has left the chat!");
     }
 
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
