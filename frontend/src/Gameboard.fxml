@@ -181,11 +181,9 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Button layoutX="820.0" layoutY="898.0" mnemonicParsing="false" onAction="#moveCharacter" prefHeight="25.0" prefWidth="116.0" text="Move" />
-      <TextField fx:id="roomTextinput" layoutX="744.0" layoutY="873.0" promptText="kitchen" />
-      <TextField fx:id="positionTextinput" layoutX="908.0" layoutY="873.0" prefHeight="25.0" prefWidth="46.0" promptText="3" />
-      <Label layoutX="744.0" layoutY="856.0" text="Room" />
-      <Label layoutX="908.0" layoutY="856.0" text="Position" />
+      <Button layoutX="704.0" layoutY="810.0" mnemonicParsing="false" onAction="#moveCharacter" prefHeight="25.0" prefWidth="116.0" text="Move" />
+      <TextField fx:id="roomTextinput" layoutX="641.0" layoutY="785.0" promptText="kitchen" />
+      <TextField fx:id="positionTextinput" layoutX="797.0" layoutY="785.0" prefHeight="25.0" prefWidth="46.0" promptText="3" />
       <Button fx:id="moveUpButton" layoutX="577.0" layoutY="810.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="Up" />
       <Text layoutX="655.0" layoutY="1001.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
@@ -202,7 +200,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="characterTurnBox" alignment="CENTER_RIGHT" layoutX="800.0" layoutY="809.0" prefHeight="27.0" prefWidth="155.0" text="Players Turn" wrapText="true">
+      <Label fx:id="characterTurnBox" alignment="CENTER_RIGHT" layoutX="813.0" layoutY="809.0" prefHeight="27.0" prefWidth="155.0" text="Players Turn" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>
@@ -213,8 +211,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="guessButton" layoutX="183.0" layoutY="1030.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Make Guess" />
-      <Button fx:id="accusationBox" layoutX="337.0" layoutY="1030.0" mnemonicParsing="false" text="Make Accusation" />
+      <Button fx:id="guessButton" layoutX="140.0" layoutY="1030.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Make Guess" />
+      <Button fx:id="accusationBox" layoutX="365.0" layoutY="1030.0" mnemonicParsing="false" text="Make Accusation" />
       <VBox fx:id="characterVbox" layoutX="164.0" layoutY="849.0" prefHeight="169.0" prefWidth="100.0" spacing="5.0">
          <children>
             <RadioButton fx:id="missScarletRadioButton" mnemonicParsing="false" text="Miss Scarlet" />
@@ -245,5 +243,8 @@
             <RadioButton fx:id="ballroomRadioButton" mnemonicParsing="false" text="Ballroom" />
             <RadioButton fx:id="kitchenRadioButton" mnemonicParsing="false" text="Kitchen" />
          </children></VBox>
+      <Button fx:id="answerGuessButton" layoutX="253.0" layoutY="1030.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Answer Guess" />
+      <Button fx:id="denyGuessButton" layoutX="859.0" layoutY="895.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Deny Guess" />
+      <Button fx:id="passOnTurnButton" layoutX="858.0" layoutY="850.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Pass on Turn" />
    </children>
 </AnchorPane>
