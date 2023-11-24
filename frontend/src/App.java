@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.*;
 import javafx.stage.Stage;
@@ -32,6 +33,13 @@ public class App extends Application {
     private TextField roomTextinput;
     @FXML
     private TextField positionTextinput;
+
+    @FXML
+    private VBox characterVbox;
+    @FXML
+    private VBox weaponVbox;
+    @FXML
+    private VBox roomVbox;
 
     @FXML
     private RadioButton missScarletRadioButton;
@@ -114,6 +122,78 @@ public class App extends Application {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void characterRadioButtonSelected() {
+        boolean itemSelected = false;
+        for (Node n : characterVbox.getChildren()) {
+            RadioButton r = (RadioButton) n;
+            if (r.isSelected()) {
+                itemSelected = true;
+            }
+        }
+        if (itemSelected) {
+            for (Node n : characterVbox.getChildren()) {
+                RadioButton r = (RadioButton) n;
+                if (!r.isSelected()) {
+                    r.setDisable(true);
+                }
+            }
+        } else {
+            for (Node n : characterVbox.getChildren()) {
+                RadioButton r = (RadioButton) n;
+                r.setDisable(false);
+            }
+        }
+    }
+
+    @FXML
+    public void weaponRadioButtonSelected() {
+        boolean itemSelected = false;
+        for (Node n : weaponVbox.getChildren()) {
+            RadioButton r = (RadioButton) n;
+            if (r.isSelected()) {
+                itemSelected = true;
+            }
+        }
+        if (itemSelected) {
+            for (Node n : weaponVbox.getChildren()) {
+                RadioButton r = (RadioButton) n;
+                if (!r.isSelected()) {
+                    r.setDisable(true);
+                }
+            }
+        } else {
+            for (Node n : weaponVbox.getChildren()) {
+                RadioButton r = (RadioButton) n;
+                r.setDisable(false);
+            }
+        }
+    }
+
+    @FXML
+    public void roomRadioButtonSelected() {
+        boolean itemSelected = false;
+        for (Node n : roomVbox.getChildren()) {
+            RadioButton r = (RadioButton) n;
+            if (r.isSelected()) {
+                itemSelected = true;
+            }
+        }
+        if (itemSelected) {
+            for (Node n : roomVbox.getChildren()) {
+                RadioButton r = (RadioButton) n;
+                if (!r.isSelected()) {
+                    r.setDisable(true);
+                }
+            }
+        } else {
+            for (Node n : roomVbox.getChildren()) {
+                RadioButton r = (RadioButton) n;
+                r.setDisable(false);
+            }
         }
     }
 

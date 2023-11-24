@@ -215,33 +215,33 @@
       <Button fx:id="accusationBox"  onAction="#makeAccusation" layoutX="365.0" layoutY="1030.0" mnemonicParsing="false" text="Make Accusation" />
       <VBox fx:id="characterVbox" layoutX="164.0" layoutY="849.0" prefHeight="169.0" prefWidth="100.0" spacing="5.0">
          <children>
-            <RadioButton fx:id="missScarletRadioButton" mnemonicParsing="false" text="Miss Scarlet" />
-            <RadioButton fx:id="colMustardRadioButton" mnemonicParsing="false" text="Col Mustard" />
-            <RadioButton fx:id="professorPlumRadioButton" mnemonicParsing="false" text="Prof Plum" />
-            <RadioButton fx:id="mrsPeacockRadioButton" mnemonicParsing="false" text="Mrs. Peacock" />
-            <RadioButton fx:id="mrGreenRadioButton" mnemonicParsing="false" text="Mr. Green" />
-            <RadioButton fx:id="mrsWhiteRadioButton" mnemonicParsing="false" text="Mrs. White" />
+            <RadioButton fx:id="missScarletRadioButton" onAction="#characterRadioButtonSelected" mnemonicParsing="false" text="Miss Scarlet" />
+            <RadioButton fx:id="colMustardRadioButton" onAction="#characterRadioButtonSelected" mnemonicParsing="false" text="Col Mustard" />
+            <RadioButton fx:id="professorPlumRadioButton" onAction="#characterRadioButtonSelected" mnemonicParsing="false" text="Prof Plum" />
+            <RadioButton fx:id="mrsPeacockRadioButton" onAction="#characterRadioButtonSelected" mnemonicParsing="false" text="Mrs. Peacock" />
+            <RadioButton fx:id="mrGreenRadioButton" onAction="#characterRadioButtonSelected" mnemonicParsing="false" text="Mr. Green" />
+            <RadioButton fx:id="mrsWhiteRadioButton" onAction="#characterRadioButtonSelected" mnemonicParsing="false" text="Mrs. White" />
          </children></VBox>
       <VBox fx:id="weaponVbox" layoutX="265.0" layoutY="846.0" prefHeight="169.0" prefWidth="100.0" spacing="5.0">
          <children>
-            <RadioButton fx:id="knifeRadioButton" mnemonicParsing="false" text="Knife" />
-            <RadioButton fx:id="wrenchRadioButton" mnemonicParsing="false" text="Wrench" />
-            <RadioButton fx:id="candleStickRadioButton" mnemonicParsing="false" text="Candle Stick" />
-            <RadioButton fx:id="revolverRadioButton" mnemonicParsing="false" text="Revolver" />
-            <RadioButton fx:id="ropeRadioButton" mnemonicParsing="false" text="Rope" />
-            <RadioButton fx:id="leadPipeRadioButton" mnemonicParsing="false" text="Lead Pipe" />
+            <RadioButton fx:id="knifeRadioButton" onAction="#weaponRadioButtonSelected" mnemonicParsing="false" text="Knife" />
+            <RadioButton fx:id="wrenchRadioButton" onAction="#weaponRadioButtonSelected" mnemonicParsing="false" text="Wrench" />
+            <RadioButton fx:id="candleStickRadioButton" onAction="#weaponRadioButtonSelected" mnemonicParsing="false" text="Candle Stick" />
+            <RadioButton fx:id="revolverRadioButton" onAction="#weaponRadioButtonSelected" mnemonicParsing="false" text="Revolver" />
+            <RadioButton fx:id="ropeRadioButton" onAction="#weaponRadioButtonSelected" mnemonicParsing="false" text="Rope" />
+            <RadioButton fx:id="leadPipeRadioButton" onAction="#weaponRadioButtonSelected" mnemonicParsing="false" text="Lead Pipe" />
          </children></VBox>
       <VBox fx:id="roomVbox" layoutX="365.0" layoutY="824.0" prefHeight="169.0" prefWidth="100.0" spacing="5.0">
          <children>
-            <RadioButton fx:id="studyRadioButton" mnemonicParsing="false" text="Study" />
-            <RadioButton fx:id="hallRadioButton" mnemonicParsing="false" text="Hall" />
-            <RadioButton fx:id="loungeRadioButton" mnemonicParsing="false" text="Lounge" />
-            <RadioButton fx:id="libraryRadioButton" mnemonicParsing="false" text="Library" />
-            <RadioButton fx:id="billiardRoomRadioButton" mnemonicParsing="false" text="Billiard Room" />
-            <RadioButton fx:id="diningRoomRadioButton" mnemonicParsing="false" text="Dining Room" />
-            <RadioButton fx:id="conservatoryRadioButton" mnemonicParsing="false" text="Conservatory" />
-            <RadioButton fx:id="ballroomRadioButton" mnemonicParsing="false" text="Ballroom" />
-            <RadioButton fx:id="kitchenRadioButton" mnemonicParsing="false" text="Kitchen" />
+            <RadioButton fx:id="studyRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Study" />
+            <RadioButton fx:id="hallRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Hall" />
+            <RadioButton fx:id="loungeRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Lounge" />
+            <RadioButton fx:id="libraryRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Library" />
+            <RadioButton fx:id="billiardRoomRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Billiard Room" />
+            <RadioButton fx:id="diningRoomRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Dining Room" />
+            <RadioButton fx:id="conservatoryRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Conservatory" />
+            <RadioButton fx:id="ballroomRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Ballroom" />
+            <RadioButton fx:id="kitchenRadioButton" onAction="#roomRadioButtonSelected" mnemonicParsing="false" text="Kitchen" />
          </children></VBox>
       <Button fx:id="answerGuessButton" layoutX="253.0" layoutY="1030.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Answer Guess" />
       <Button fx:id="denyGuessButton" layoutX="859.0" layoutY="895.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Deny Guess" />
