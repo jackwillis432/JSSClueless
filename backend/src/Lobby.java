@@ -23,8 +23,8 @@ public class Lobby {
     private ArrayList<String> weapons = new ArrayList<String>(
             Arrays.asList("Knife", "Revolver", "Rope", "Wrench", "Candle Stick", "Lead Pipe"));
     private ArrayList<String> rooms = new ArrayList<String>(
-            Arrays.asList("study", "hall", "lounge", "library", "billiardroom", "diningoom",
-                    "conservatory", "ballroom", "kitchen", "hallway"));
+            Arrays.asList("Study", "Hall", "Lounge", "Library", "Billiard Room", "Dining Room",
+                    "Conservatory", "Ballroom", "Kitchen"));
 
     // Not mutated list that just keep track of general game informations
     private ArrayList<int[]> startingPositions = new ArrayList<>(

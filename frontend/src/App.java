@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.*;
@@ -31,6 +32,51 @@ public class App extends Application {
     private TextField roomTextinput;
     @FXML
     private TextField positionTextinput;
+
+    @FXML
+    private RadioButton missScarletRadioButton;
+    @FXML
+    private RadioButton colMustardRadioButton;
+    @FXML
+    private RadioButton professorPlumRadioButton;
+    @FXML
+    private RadioButton mrsPeacockRadioButton;
+    @FXML
+    private RadioButton mrGreenRadioButton;
+    @FXML
+    private RadioButton mrsWhiteRadioButton;
+
+    @FXML
+    private RadioButton knifeRadioButton;
+    @FXML
+    private RadioButton wrenchRadioButton;
+    @FXML
+    private RadioButton candleStickRadioButton;
+    @FXML
+    private RadioButton revolverRadioButton;
+    @FXML
+    private RadioButton ropeRadioButton;
+    @FXML
+    private RadioButton leadPipeRadioButton;
+
+    @FXML
+    private RadioButton studyRadioButton;
+    @FXML
+    private RadioButton hallRadioButton;
+    @FXML
+    private RadioButton loungeRadioButton;
+    @FXML
+    private RadioButton libraryRadioButton;
+    @FXML
+    private RadioButton billiardRoomRadioButton;
+    @FXML
+    private RadioButton diningRoomRadioButton;
+    @FXML
+    private RadioButton conservatoryRadioButton;
+    @FXML
+    private RadioButton ballroomRadioButton;
+    @FXML
+    private RadioButton kitchenRadioButton;
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -69,6 +115,83 @@ public class App extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public String[] getRadioSelection() {
+        String characterSelected;
+        String roomSelected;
+        String weaponSelected;
+
+        if (missScarletRadioButton.isSelected()) {
+            characterSelected = "Miss Scarlet";
+        } else if (colMustardRadioButton.isSelected()) {
+            characterSelected = "Colonel Mustard";
+        } else if (professorPlumRadioButton.isSelected()) {
+            characterSelected = "Professor Plum";
+        } else if (mrsPeacockRadioButton.isSelected()) {
+            characterSelected = "Mrs. Peacock";
+        } else if (mrGreenRadioButton.isSelected()) {
+            characterSelected = "Mr. Green";
+        } else if (mrsWhiteRadioButton.isSelected()) {
+            characterSelected = "Mrs. White";
+        } else {
+            characterSelected = "none";
+        }
+
+        if (knifeRadioButton.isSelected()) {
+            weaponSelected = "Knife";
+        } else if (wrenchRadioButton.isSelected()) {
+            weaponSelected = "Wrench";
+        } else if (candleStickRadioButton.isSelected()) {
+            weaponSelected = "Candle Stick";
+        } else if (revolverRadioButton.isSelected()) {
+            weaponSelected = "Revolver";
+        } else if (ropeRadioButton.isSelected()) {
+            weaponSelected = "Rope";
+        } else if (leadPipeRadioButton.isSelected()) {
+            weaponSelected = "Lead Pipe";
+        } else {
+            weaponSelected = "none";
+        }
+
+        if (studyRadioButton.isSelected()) {
+            roomSelected = "Study";
+        } else if (hallRadioButton.isSelected()) {
+            roomSelected = "Hall";
+        } else if (loungeRadioButton.isSelected()) {
+            roomSelected = "Lounge";
+        } else if (libraryRadioButton.isSelected()) {
+            roomSelected = "Library";
+        } else if (billiardRoomRadioButton.isSelected()) {
+            roomSelected = "Billiard Room";
+        } else if (diningRoomRadioButton.isSelected()) {
+            roomSelected = "Dining Room";
+        } else if (conservatoryRadioButton.isSelected()) {
+            roomSelected = "Conservatory";
+        } else if (ballroomRadioButton.isSelected()) {
+            roomSelected = "Ballroom";
+        } else if (kitchenRadioButton.isSelected()) {
+            roomSelected = "Kitchen";
+        } else {
+            roomSelected = "none";
+        }
+
+        return new String[] { characterSelected, roomSelected, weaponSelected };
+    }
+
+    @FXML
+    public void makeGuess() {
+        String[] selection = getRadioSelection();
+        System.out.println("The guess is: " + Arrays.toString(selection));
+        // Kick off guessing logic to server here
+    }
+
+    @FXML
+    public void makeAccusation() {
+        String[] selection = getRadioSelection();
+        System.out.println("The accusation is: " + Arrays.toString(selection));
+        // Kick off accusation logic to server here
     }
 
     @FXML
@@ -265,16 +388,16 @@ public class App extends Application {
 
         Map<String, Map<Integer, int[]>> positionMap = new HashMap<String, Map<Integer, int[]>>() {
             {
-                put("study", study);
-                put("hall", hall);
-                put("lounge", lounge);
-                put("library", library);
-                put("billiardroom", billiardroom);
-                put("diningroom", diningroom);
-                put("conservatory", conservatory);
-                put("ballroom", ballroom);
-                put("kitchen", kitchen);
-                put("hallway", hallway);
+                put("Study", study);
+                put("Hall", hall);
+                put("Lounge", lounge);
+                put("Library", library);
+                put("Billiard Room", billiardroom);
+                put("Dining Room", diningroom);
+                put("Conservatory", conservatory);
+                put("Ballroom", ballroom);
+                put("Kitchen", kitchen);
+                put("Hallway", hallway);
             }
         };
 

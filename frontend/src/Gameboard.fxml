@@ -211,8 +211,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="guessButton" layoutX="140.0" layoutY="1030.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Make Guess" />
-      <Button fx:id="accusationBox" layoutX="365.0" layoutY="1030.0" mnemonicParsing="false" text="Make Accusation" />
+      <Button fx:id="guessButton"  onAction="#makeGuess" layoutX="140.0" layoutY="1030.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Make Guess" />
+      <Button fx:id="accusationBox"  onAction="#makeAccusation" layoutX="365.0" layoutY="1030.0" mnemonicParsing="false" text="Make Accusation" />
       <VBox fx:id="characterVbox" layoutX="164.0" layoutY="849.0" prefHeight="169.0" prefWidth="100.0" spacing="5.0">
          <children>
             <RadioButton fx:id="missScarletRadioButton" mnemonicParsing="false" text="Miss Scarlet" />
@@ -238,7 +238,7 @@
             <RadioButton fx:id="loungeRadioButton" mnemonicParsing="false" text="Lounge" />
             <RadioButton fx:id="libraryRadioButton" mnemonicParsing="false" text="Library" />
             <RadioButton fx:id="billiardRoomRadioButton" mnemonicParsing="false" text="Billiard Room" />
-            <RadioButton fx:id="diningRadioButton" mnemonicParsing="false" text="Dining Room" />
+            <RadioButton fx:id="diningRoomRadioButton" mnemonicParsing="false" text="Dining Room" />
             <RadioButton fx:id="conservatoryRadioButton" mnemonicParsing="false" text="Conservatory" />
             <RadioButton fx:id="ballroomRadioButton" mnemonicParsing="false" text="Ballroom" />
             <RadioButton fx:id="kitchenRadioButton" mnemonicParsing="false" text="Kitchen" />
