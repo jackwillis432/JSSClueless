@@ -2,10 +2,14 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.scene.*;
 import javafx.stage.Stage;
 import java.util.*;
@@ -40,6 +44,8 @@ public class App extends Application {
     private VBox weaponVbox;
     @FXML
     private VBox roomVbox;
+    @FXML
+    private VBox cardVbox;
 
     @FXML
     private RadioButton missScarletRadioButton;
@@ -86,6 +92,15 @@ public class App extends Application {
     @FXML
     private RadioButton kitchenRadioButton;
 
+    @FXML
+    private TextArea notificationBox;
+    @FXML
+    private Label characterNameBox;
+    @FXML
+    private Label characterTurnBox;
+    @FXML
+    private Rectangle characterColorBox;
+
     public static void main(String[] args) throws Exception {
         launch(args);
     }
@@ -125,7 +140,96 @@ public class App extends Application {
         }
     }
 
+    // Main Game Helper Functions
+
+    // Calls the functions setCards, setCharacterNameBox, setCharacterColorBox,
+    // setCharacterTurnbox
+    // Should be called by Lobby.java at the beginning of the game to set each
+    // players
+    // current turn box, cards, character color box and character name box
+    private void initializePlayer(String[] cards, String character, String currentCharactersTurn) {
+        // This function should be called by the Lobby class when a game starts
+        setCards(cards);
+        setCharacterColorBox(character);
+        setCharacterNameBox(character);
+        setCharacterTurnBox(currentCharactersTurn);
+    }
+
     @FXML
+    // Sets the list of cards on the players UI
+    private void setCards(String[] cards) {
+        for (String card : cards) {
+            cardVbox.getChildren().addAll(new Text(card));
+        }
+    }
+
+    @FXML
+    // Sets character turn box to the current player (characters) turn
+    private void setCharacterTurnBox(String character) {
+        characterTurnBox.setText(character + "'s Turn");
+    }
+
+    @FXML
+    // Sets the large character name on the Players UI
+    private void setCharacterNameBox(String character) {
+        characterNameBox.setText(character);
+    }
+
+    @FXML
+    // Sets the large character color box on the Players UI
+    private void setCharacterColorBox(String character) {
+        Color color;
+
+        if (character.equals("Miss Scarlet")) {
+            color = Color.web("#ff2203");
+        } else if (character.equals("Colonel Mustard")) {
+            color = Color.web("#ffc805");
+        } else if (character.equals("Mrs. White")) {
+            color = Color.web("#fffffe");
+        } else if (character.equals("Mr. Green")) {
+            color = Color.web(" #139405");
+        } else if (character.equals("Mrs. Peacock")) {
+            color = Color.web("#0518ff");
+        } else if (character.equals("Professor Plum")) {
+            color = Color.web("#c805ff");
+        } else {
+            color = Color.web("#ffffff");
+        }
+
+        characterColorBox.setFill(color);
+    }
+
+    @FXML
+    // Bound to the moveLeft button on the UI, calls makeMove
+    private void moveLeft() {
+        System.out.println("Left Move Button Clicked");
+        makeMove("Left");
+    }
+
+    @FXML
+    // Bound to the moveRight button on the UI, calls makeMove
+    private void moveRight() {
+        System.out.println("Right Move Button Clicked");
+        makeMove("Right");
+    }
+
+    @FXML
+    // Bound to the moveUp button on the UI, calls makeMove
+    private void moveUp() {
+        System.out.println("Up Move Button Clicked");
+        makeMove("Up");
+    }
+
+    @FXML
+    // Bound to the moveDown button on the UI, calls makeMove
+    private void moveDown() {
+        System.out.println("Down Move Button Clicked");
+        makeMove("Down");
+    }
+
+    @FXML
+    // Disables other character radio buttons when one is selected
+    // Enables other character radio buttons when one is unselected
     public void characterRadioButtonSelected() {
         boolean itemSelected = false;
         for (Node n : characterVbox.getChildren()) {
@@ -150,6 +254,8 @@ public class App extends Application {
     }
 
     @FXML
+    // Disables other weapon radio buttons when one is selected
+    // Enables other weapon radio buttons when one is unselected
     public void weaponRadioButtonSelected() {
         boolean itemSelected = false;
         for (Node n : weaponVbox.getChildren()) {
@@ -174,6 +280,8 @@ public class App extends Application {
     }
 
     @FXML
+    // Disables other room radio buttons when one is selected
+    // Enables other room weapon radio buttons when one is unselected
     public void roomRadioButtonSelected() {
         boolean itemSelected = false;
         for (Node n : roomVbox.getChildren()) {
@@ -198,6 +306,8 @@ public class App extends Application {
     }
 
     @FXML
+    // Gets a string array for each [ character, weapon, room ] radio button
+    // selected
     public String[] getRadioSelection() {
         String characterSelected;
         String roomSelected;
@@ -260,25 +370,77 @@ public class App extends Application {
         return new String[] { characterSelected, roomSelected, weaponSelected };
     }
 
+    // Main Game Functions
+
     @FXML
-    public void makeGuess() {
+    // Allows a player to make a guess
+    private void makeGuess() {
         String[] selection = getRadioSelection();
         System.out.println("The guess is: " + Arrays.toString(selection));
         // Kick off guessing logic to server here
+
+        String[] cards = new String[] { "Card 1", "Card 2", "Card 3", "Card 4", "Card 5" };
+        String characterName = "Colonel Mustard";
+        String characterTurn = "Miss Scarlet";
+        initializePlayer(cards, characterName, characterTurn);
     }
 
     @FXML
-    public void makeAccusation() {
+    // Allows a player to make an accusation
+    private void makeAccusation() {
         String[] selection = getRadioSelection();
         System.out.println("The accusation is: " + Arrays.toString(selection));
         // Kick off accusation logic to server here
     }
 
     @FXML
-    public void moveCharacter() {
-        setMissscarletPosition(roomTextinput.getText(),
-                Integer.parseInt(positionTextinput.getText()));
+    // Allows a player to move their character around the map
+    private void makeMove(String direction) {
+        // This function is called by moveLeft, moveRight, moveUp & moveDown buttons
+
+        // Move logic to server goes here
+
+        // If moved then call set<Character>Position function here
     }
+
+    @FXML
+    // Sets the notification box on the playersUI
+    private void setNotificationBox(String message) {
+        notificationBox.setText("Notification Message: " + message);
+    }
+
+    @FXML
+    // Allows a player to skip their turn
+    private void passOnTurn() {
+        // Logic for passing on you turn
+        System.out.println("Pass on Turn Button Clicked");
+    }
+
+    @FXML
+    // Allows a player to answer a guess directed towards them
+    private void answerGuess() {
+        // Logic for answering a guess proposed by another player
+        String[] selection = getRadioSelection();
+        System.out.println("Your answer is: " + Arrays.toString(selection));
+        System.out.println("Answer Guess Button Clicked");
+    }
+
+    @FXML
+    // Allows a player to deny a guess directed towards them (i.e the don't have any
+    // cards in the guess)
+    private void denyGuess() {
+        // Logic for denying all parts of a guess
+        System.out.println("Deny Guess Button Clicked");
+    }
+
+    // Move Functions
+
+    // @FXML
+    // // Test function
+    // private void moveCharacter() {
+    // setMissscarletPosition(roomTextinput.getText(),
+    // Integer.parseInt(positionTextinput.getText()));
+    // }
 
     @FXML
     private void setMissscarletPosition(String room, int pos) {
@@ -323,6 +485,7 @@ public class App extends Application {
     }
 
     private int[] getPosition(String room, int pos) {
+
         Map<Integer, int[]> study = new HashMap<Integer, int[]>() {
             {
                 put(0, new int[] { 15, 0 });
@@ -483,4 +646,5 @@ public class App extends Application {
 
         return new int[] { positionMap.get(room).get(pos)[0], positionMap.get(room).get(pos)[1] };
     }
+
 }
