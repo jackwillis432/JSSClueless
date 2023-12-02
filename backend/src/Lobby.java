@@ -33,6 +33,12 @@ public class Lobby {
     private ArrayList<String> charactersImmutable = new ArrayList<String>(
             Arrays.asList("Miss Scarlet", "Colonel Mustard",
                     "Mrs. White", "Mr. Green", "Mrs. Peacock", "Professor Plum"));
+    
+    // A boolean to determine if the current player has made a valid move, gets changed by the endTurn() function
+    private boolean didMove = false;
+
+    // A boolean to determine if the current player has made a valid guess, gets changed by the endTurn() function
+    private boolean didGuess = false;
 
     // The turn order for the connection clients, turns match the indexes of the
     // clientHandlers ArrayList
@@ -73,8 +79,9 @@ public class Lobby {
         // Set currentPlayer to first players turn
         currentPlayerTurn = turnOrder[0];
 
-        // msg the first player that it's there turn
-        // msg the rest of the players that the game has started and the turn order
+
+        // Messsage the first player that it's there turn
+        // Message the rest of the players that the game has started and the turn order
 
         // TODO: Debug message
         System.out.println("Game has started!");
@@ -82,6 +89,8 @@ public class Lobby {
 
     // private void endGame() {
     // }
+
+    
 
     // Creates players for each client and playernpcs for the remaining characters
     private void createPlayers() {
@@ -177,22 +186,51 @@ public class Lobby {
     }
 
     public void makeGuess(String guess) {
+        // Ensure they didn't guess already
+        if(didGuess) {
+            // Send message to the current player that they already guess this turn
 
+            // Leave the function
+            return;
+        }
+
+        // Update didGuess for the current player
+        didGuess = true;
     }
 
     public void makeAccusation(String guess) {
     }
 
     public void makeMove(ClientHandler clientHandler) {
-        // check if move is valid -> call isValidMove
-        // if yes
-        // update player position in player class
-        // tell clienthandler to message it's client to move the character to a new
-        // position -> call sendMessage
-        // tell other players of move -> call sendMessage
-        // if no
-        // tell clienthandler to message it's client that the move is invalid -> call
-        // sendMessage
+        // Ensure they didn't move already
+        if(didMove) {
+            // Send message to the current player that they already moved this turn
+
+            // Leave the function
+            return;
+        }
+
+        // Check if move is valid
+        if (isValidMove()) {
+            // Update player position in player class
+            // Send message to player gameboards to move this players square
+            // Tell clienthandler to message it's client to move the character to a new
+            // Tell other players of move, call sendMessage
+
+            // Update didMove to true for the current player
+            didMove = true;
+        } else {
+            // Send message to the current player that they made an invalid move and to try again 
+        }
+    }
+
+    private void endTurn() {
+        // Set didMove and didGuess to false
+        didMove = false;
+        didGuess = false;
+
+        // Update the current player to the next player
+        // currentCharactersTurn
     }
 
     public String getCurrentPlayerTurn() {
