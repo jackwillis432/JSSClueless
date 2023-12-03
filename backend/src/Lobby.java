@@ -4,7 +4,7 @@
 // When a player makes a guess and a character needs to be moved, this needs to 
 // be accounted for
 //
-// ->
+// -> 
 // ============================================================================ //
 import java.util.*;
 
@@ -15,9 +15,21 @@ public class Lobby {
     // The index of the current player
     private int turnIndex = 0;
 
-    // A global clientHandlers list, this list is the clientHandlers that this class
-    // is constructed with
-    public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+    // A boolean to determine if the current player has made a valid move, gets changed by the endTurn() function
+    private boolean didMove = false;
+
+    // A boolean that is can determine if a guess awaiting a response or not
+    private boolean canGuess = true;
+
+    // A int that respresents the number of players a guess ask been asked during a turn
+    // We need this to ensure the current player can't ask more than the available players
+    private int numberOfGuesses = 0;
+
+    // A Player field that is the player being asked a guess at this time
+    private Player guessResponder; 
+
+    // A String array that represents the current players guess
+    private String[] currentGuess;
 
     // The following are three lists of available cards to choose from, cards get
     // removed as they are assigned to players
@@ -37,11 +49,9 @@ public class Lobby {
             Arrays.asList("Miss Scarlet", "Colonel Mustard",
                     "Mrs. White", "Mr. Green", "Mrs. Peacock", "Professor Plum"));
     
-    // A boolean to determine if the current player has made a valid move, gets changed by the endTurn() function
-    private boolean didMove = false;
-
-    // A boolean to determine if the current player has made a valid guess, gets changed by the endTurn() function
-    private boolean didGuess = false;
+     // A global clientHandlers list, this list is the clientHandlers that this class
+    // is constructed with
+    public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();   
 
     // The turn order for the connection clients, turns match the indexes of the clientHandlers ArrayList
     public Player[] turnOrder = new Player[6];
@@ -80,6 +90,9 @@ public class Lobby {
 
         // Set currentPlayer to first players turn
         currentPlayerTurn = turnOrder[0];
+
+        // Set guessResponder to the second player
+        guessResponder = turnOrder[1];
 
         // TODO: Send messsage (via ClientHandler) the first player that it's there turn
 
@@ -177,9 +190,48 @@ public class Lobby {
         // make the nine rooms
     }
 
+    // Validates if a move sent to the server is correct
     private Boolean isValidMove() {
         // TODO: Check that the player trying to move is the currentplayer
-        // TODO: Check hashmap for valid moves
+
+        // TODO: Check if the move is valid
+            // They can do the action UP, DOWN, RIGHT or LEFT from where they are
+                // There is an unblocked room/hallway they can reach using this move
+                    // Check if they are in a room or a hallway, consider making a Map of possible moves from a position
+            // If they are in a room with a trap door TRAPDOOR is valid
+
+        if(didMove) {
+            // TODO: Send message (via ClientHandler) to the current player that they already moved this turn
+            return false;
+        }
+
+        return true;
+    }
+
+    // Validates if a guess sent to the server is correct
+    private Boolean isValidGuess(String[] guess) {
+        // TODO: Check that the player trying to guess is the currentplayer
+
+        // TODO: Check that the guess consists of a character, room, & weapon
+
+        // Check if a guess is currently underway or not
+        if(!canGuess) {
+            return false;
+        // Check if they have exceeded the number of players the can guess against
+        } else if(numberOfGuesses > clientHandlers.size() - 1) {
+            // TODO: Send message (via ClientHandler) to the currentPlayerTurn that they can't guess anymore 
+            return false;
+        // Check if the guess isn't three elements long 
+        } else if(guess.length != 3) {
+            // TODO: Send message (via ClientHandler) that the guess is too long
+            return false;
+        // Check if they have guessed before that the guesses match, when you go through the players asking if a guess is correct it should be the same guess each time
+        } else if(numberOfGuesses > 0) {
+            for(int i = 0; i < guess.length; i++) {
+                if(!guess[i].equals(currentGuess[i])) return false;
+            }
+        }
+
         return true;
     }
 
@@ -188,58 +240,90 @@ public class Lobby {
         // Tell specific clientHandlers to send a message to their clients
     }
 
-    public void makeGuess(String guess) {
-        // Ensure they didn't guess already
-        if(didGuess) {
-            // TODO: Send message (via ClientHandler) to the current player that they already guessed this turn
-
-            // Leave the function
+    public void makeGuess(String[] guess) {
+        // Validate the guess, if it's invalid then return 
+        if(!isValidGuess(guess)) {
             return;
+        } 
+
+        // If this is the first time guessing, set the currentGuess
+        if(numberOfGuesses == 0) {
+            currentGuess = guess;
         }
 
         // TODO: Guessing logic goes here
+          
+        // TODO: Send message (via ClientHandler) to the guessResponder asking them to respond to the guess
 
-        // Update didGuess for the current player
-        didGuess = true;
+        // Lock guessing until the guessResponder denys a guess
+        canGuess = false;
+
+        // TODO: Send message (via ClientHandlers) to all players of the guess
+
+        // Update numberOfGuesses for the current player
+        numberOfGuesses++;
     }
 
     public void makeAccusation(String guess) {
         // TODO: Accusation logic goes here
+
+        // TODO: Send message (via ClientHandlers)
     }
 
     public void makeMove(ClientHandler clientHandler) {
-        // Ensure they didn't move already
-        if(didMove) {
-            // TODO: Send message (via ClientHandler) to the current player that they already moved this turn
-
-            // TODO: Leave the function
+        // Validate the move, if it's invalid then return 
+        if(!isValidMove()) {
             return;
-        }
+        }        
 
-        // Check if move is valid
-        if (isValidMove()) {
-            // TODO: Move logic goes here
-            // TODO: Update player position in their player class
-            // TODO: Send message (via ClientHandler) to player gameboards to move this players square
-            // TODO: Send message (via ClientHandler) to other players alerting them of the move
+        // TODO: Move logic goes here
 
-            // Update didMove to true for the current player
-            didMove = true;
-        } else {
-            // TODO: Send message (via ClientHandler) to the current player that they made an invalid move and to try again 
-        }
+        // TODO: Update player position in their player class
+        
+        // TODO: Send message (via ClientHandler) to player gameboards to move this players square
+        
+        // TODO: Send message (via ClientHandler) to other players alerting them of the move
+
+        // Update didMove to true for the current player
+        didMove = true;
+    }
+
+    // Allows the current guessResponder to deny a guess
+    public void denyGuess() {
+        // TODO: Check that the person denying the guess is the current guessResponder
+
+        // TODO: Send message (via ClientHandlers) to all clients of the denial of the guess
+        
+        // Update guessResponder to the next person in line (wrap around end of the turnOrder array) 
+        guessResponder = turnOrder[(turnIndex + numberOfGuesses + 1) % clientHandlers.size()];
+
+        // Allow another guess to occur
+        canGuess = true;
+    }
+
+    public void confirmGuess(String[] guessConfirmation) {
+        // TODO: Send message (via ClientHandler) to the currentPlayersTurn of the part of their guess that was correct
+
+        // Don't reset canGuess since a player has to stop guessing after it was confirmed once
     }
 
     public void endTurn() {
-        // Set didMove and didGuess to false
+        // Reset state variables 
         didMove = false;
-        didGuess = false;
+        numberOfGuesses = 0;
+        currentGuess = new String[]{};
+        canGuess = true;
+
+        // Update the turnIndex to the next player (wrap around end of the turnOrder array)
+        turnIndex = (turnIndex + 1) % clientHandlers.size();
 
         // Update the current player to the next player
-        turnIndex = (turnIndex + 1) % turnOrder.length;
         currentPlayerTurn = turnOrder[turnIndex];
 
-        // TODO: Send message (via ClientHandler) to next player that it's their turn
+        // Update the guessResponder to the next player (after the new currentPlayer) in the order (wrap around end of turnOrder array)
+        guessResponder = turnOrder[(turnIndex + 1) % clientHandlers.size()];
+
+        // TODO: Send message (via ClientHandler) to all players of the next ones turn and that this turn has ended
 
         // TODO: Send message (via ClientHandler) to all gameboards of the new players turn to update current turn field on UIs
     }
