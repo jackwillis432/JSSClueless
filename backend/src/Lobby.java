@@ -12,6 +12,9 @@ public class Lobby {
     // The player whose turn it currently is
     private Player currentPlayerTurn;
 
+    // The index of the current player
+    private int turnIndex = 0;
+
     // A global clientHandlers list, this list is the clientHandlers that this class
     // is constructed with
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
@@ -40,8 +43,7 @@ public class Lobby {
     // A boolean to determine if the current player has made a valid guess, gets changed by the endTurn() function
     private boolean didGuess = false;
 
-    // The turn order for the connection clients, turns match the indexes of the
-    // clientHandlers ArrayList
+    // The turn order for the connection clients, turns match the indexes of the clientHandlers ArrayList
     public Player[] turnOrder = new Player[6];
 
     // A list of potential Non-Playable-Characters when the connected clients are
@@ -79,9 +81,11 @@ public class Lobby {
         // Set currentPlayer to first players turn
         currentPlayerTurn = turnOrder[0];
 
+        // TODO: Send messsage (via ClientHandler) the first player that it's there turn
 
-        // Messsage the first player that it's there turn
-        // Message the rest of the players that the game has started and the turn order
+        // TODO: Send message (via ClientHandler) all the gameboards to update their current players turn UI element
+
+        // TODO: Send message (via ClientHandler) the rest of the players that the game has started and the turn order
 
         // TODO: Debug message
         System.out.println("Game has started!");
@@ -89,8 +93,6 @@ public class Lobby {
 
     // private void endGame() {
     // }
-
-    
 
     // Creates players for each client and playernpcs for the remaining characters
     private void createPlayers() {
@@ -140,10 +142,12 @@ public class Lobby {
                     // clientHandler
                     currClientHandler);
 
-            // map clienthandlers to players in the map
+            // TODO: Send a message to each gameboard (via ClientHandler) giving them their player information (color, character name, cards)
+
+            // Map clienthandlers to players in the map
             clientHandlersPlayerMap.put(currClientHandler, newPlayer);
 
-            // add each player to the turn order array
+            // Add each player to the turn order array
             turnOrder[i] = newPlayer;
 
             // TODO: Debug message
@@ -151,8 +155,7 @@ public class Lobby {
                     + ", they have the following cards: " + hands.get(i) + "\n");
         }
 
-        // create playerNPC classes for the remainding spots if less then 6 players are
-        // playing
+        // Create playerNPC classes for the remainding spots if less then 6 players are playing
         int index = numPlayers;
         int end = 6 - numPlayers;
         for (int i = 0; i < end; i++) {
@@ -171,66 +174,74 @@ public class Lobby {
     }
 
     private void createRoom() {
-        // make the nine ro
+        // make the nine rooms
     }
 
     private Boolean isValidMove() {
-        // check that the player trying to move is the currentplayer
-        // check hashmap for valid moves
+        // TODO: Check that the player trying to move is the currentplayer
+        // TODO: Check hashmap for valid moves
         return true;
     }
 
     public void sendMessage(String message, ClientHandler[] recievers) {
-        // hardcode game messages into specific message formats
-        // tell specific clientHandlers to send a message to their clients
+        // Hardcode game messages into specific message formats
+        // Tell specific clientHandlers to send a message to their clients
     }
 
     public void makeGuess(String guess) {
         // Ensure they didn't guess already
         if(didGuess) {
-            // Send message to the current player that they already guess this turn
+            // TODO: Send message (via ClientHandler) to the current player that they already guessed this turn
 
             // Leave the function
             return;
         }
+
+        // TODO: Guessing logic goes here
 
         // Update didGuess for the current player
         didGuess = true;
     }
 
     public void makeAccusation(String guess) {
+        // TODO: Accusation logic goes here
     }
 
     public void makeMove(ClientHandler clientHandler) {
         // Ensure they didn't move already
         if(didMove) {
-            // Send message to the current player that they already moved this turn
+            // TODO: Send message (via ClientHandler) to the current player that they already moved this turn
 
-            // Leave the function
+            // TODO: Leave the function
             return;
         }
 
         // Check if move is valid
         if (isValidMove()) {
-            // Update player position in player class
-            // Send message to player gameboards to move this players square
-            // Tell clienthandler to message it's client to move the character to a new
-            // Tell other players of move, call sendMessage
+            // TODO: Move logic goes here
+            // TODO: Update player position in their player class
+            // TODO: Send message (via ClientHandler) to player gameboards to move this players square
+            // TODO: Send message (via ClientHandler) to other players alerting them of the move
 
             // Update didMove to true for the current player
             didMove = true;
         } else {
-            // Send message to the current player that they made an invalid move and to try again 
+            // TODO: Send message (via ClientHandler) to the current player that they made an invalid move and to try again 
         }
     }
 
-    private void endTurn() {
+    public void endTurn() {
         // Set didMove and didGuess to false
         didMove = false;
         didGuess = false;
 
         // Update the current player to the next player
-        // currentCharactersTurn
+        turnIndex = (turnIndex + 1) % turnOrder.length;
+        currentPlayerTurn = turnOrder[turnIndex];
+
+        // TODO: Send message (via ClientHandler) to next player that it's their turn
+
+        // TODO: Send message (via ClientHandler) to all gameboards of the new players turn to update current turn field on UIs
     }
 
     public String getCurrentPlayerTurn() {
